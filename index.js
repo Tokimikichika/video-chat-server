@@ -1,6 +1,8 @@
+const http = require('http');
 const { Server } = require("socket.io");
+const server = http.createServer();
 
-const io = new Server(8000, {
+const io = new Server(server, {
     cors: true,
 });
 
@@ -36,3 +38,7 @@ io.on("connection", (socket) => {
 
     })
 });
+
+server.listen(8000, () => {
+    console.log('Socket.io server is running on port 8000');
+  });
