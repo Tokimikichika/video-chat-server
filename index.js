@@ -1,13 +1,20 @@
+const express = require("express");
 const http = require('http');
 const { Server } = require("socket.io");
-const server = http.createServer();
+const cors = require("cors");
 
+const app = express();
+const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "https://animated-crumble-127a7b.netlify.app",
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST"],
       },
 });
+app.use(cors({ origin: "*" }));
+
+const route = require("./route");
+app.use(route);
 
 const emailToSocketIdMap = new Map();
 const socketidToEmailMap = new Map();
@@ -41,7 +48,6 @@ io.on("connection", (socket) => {
 
     })
 });
-
 server.listen(8000, () => {
     console.log('Socket.io server is running on port 8000');
-  });
+});
