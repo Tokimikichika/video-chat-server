@@ -3,7 +3,10 @@ const { Server } = require("socket.io");
 const server = http.createServer();
 
 const io = new Server(server, {
-    cors: true,
+    cors: {
+        origin: "https://animated-crumble-127a7b.netlify.app",
+        methods: ["GET", "POST"]
+      },
 });
 
 const emailToSocketIdMap = new Map();
